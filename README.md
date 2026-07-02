@@ -1,7 +1,7 @@
 # Facial Recognition Comparison System
 
 A comprehensive dual-pipeline facial recognition benchmark system that compares classical computer vision (SIFT + Bag-of-Visual-Words + KNN) against modern deep learning (PyTorch ResNet/MobileNet) approaches on identical data.
-
+git 
 ## Features
 
 ### Classical Pipeline
@@ -448,62 +448,3 @@ See `requirements.txt` for complete dependencies. Key packages:
 - `pyyaml`: Configuration management
 - `pandas`: Data handling
 
-### Hardware
-
-- **Minimum**: 4GB RAM, modern CPU
-- **Recommended**: 8GB+ RAM, NVIDIA GPU (CUDA 11.8+)
-
-### Supported Operating Systems
-
-- Linux (Ubuntu 18.04+)
-- macOS (10.14+)
-- Windows 10/11
-
-## Citation
-
-If you use this system in your research, please cite:
-
-```bibtex
-@software{facial_recognition_comparison_2024,
-  title={Facial Recognition Comparison System},
-  author={Your Name},
-  year={2024},
-  url={https://github.com/yourrepo/facial-recognition}
-}
-```
-
-## License
-
-This project is licensed under the MIT License - see LICENSE file for details.
-
-## Contributors
-
-- **Kiro**: System design and planning
-- **Your Team**: Implementation
-
-## Support
-
-For issues, questions, or contributions:
-
-1. Check the Troubleshooting section above
-2. Review `config.yaml` comments
-3. Check logs in console output for detailed error messages
-4. Open an issue with:
-   - Your OS and Python version
-   - The exact command you ran
-   - Error message and traceback
-   - Output from `python -c "import sys; print(sys.version)"`
-
-## Roadmap
-
-- [ ] Real-time face recognition from webcam
-- [ ] Multi-GPU training support
-- [ ] REST API for inference
-- [ ] Web UI for dataset management
-- [ ] Federated learning support
-- [ ] Mobile deployment (TFLite, ONNX)
-
----
-
-**Last Updated**: June 2024
-**Status**: Production Ready ✅
