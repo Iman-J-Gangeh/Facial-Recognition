@@ -1,0 +1,64 @@
+# =============================================================================
+#  Facial Recognition Comparison System — Master Configuration
+#  All configurable parameters are documented here.
+#  CLI overrides: pass --key=value; keys must match Config field names exactly.
+# =============================================================================
+
+# ── Dataset ──────────────────────────────────────────────────────────────────
+dataset:
+  path: "data/kaggle"              # str  : root folder containing Identity subdirs
+  type: "kaggle"                   # str  : "kaggle" | "vggface2"
+  max_identities: null             # int | null : limit number of identity classes loaded
+  max_images_per_identity: null    # int | null : limit images loaded per identity
+
+# ── Preprocessing ─────────────────────────────────────────────────────────────
+preprocessing:
+  detector_backend: "mtcnn"        # str  : "haar" | "dnn" | "mtcnn" | "retinaface"
+  no_face_fallback: "skip"         # str  : "skip" | "use_full"
+  image_size: [224, 224]           # [int, int] : [width, height] in pixels (1–4096 each)
+  norm_mean: [0.485, 0.456, 0.406] # [float, float, float] : per-channel mean (ImageNet)
+  norm_std: [0.229, 0.224, 0.225]  # [float, float, float] : per-channel std  (ImageNet)
+
+# ── Splitting ─────────────────────────────────────────────────────────────────
+splitting:
+  ratios: [0.7, 0.15, 0.15]        # [float, float, float] : train / val / test (must sum to 1.0)
+  random_seed: 42                  # int  : seed for reproducible splits
+  metadata_path: "outputs/splits/split_index.csv"  # str : where to save/load split CSV
+  force_resplit: false             # bool : if true, ignore saved split and recompute
+
+# ── Classical Pipeline ────────────────────────────────────────────────────────
+classical:
+  vocab_size: 1000                 # int  : K-means cluster count (visual vocabulary size)
+  kmeans_max_iter: 300             # int  : maximum K-means iterations before stopping
+  knn_k: 5                        # int  : K for K-Nearest Neighbours (must be >= 1)
+  knn_metric: "euclidean"          # str  : "euclidean" | "cosine" | any sklearn metric
+  artifacts_dir: "outputs/artifacts/classical"  # str : directory for classical artifacts
+
+# ── Verification (Classical Pipeline) ────────────────────────────────────────
+verification:
+  enabled: false                   # bool : enable facial verification mode
+  threshold: 0.5                   # float: similarity score threshold for a positive match [0, 1]
+  ransac_enabled: false            # bool : apply RANSAC geometric verification as reranking step
+
+# ── Deep Learning Pipeline ────────────────────────────────────────────────────
+deep:
+  architecture: "resnet50"         # str  : "resnet18" | "resnet50" | "mobilenet" | "efficientnet"
+  pretrained: true                 # bool : initialise backbone with ImageNet weights
+  epochs: 20                       # int  : number of training epochs
+  optimizer: "adam"                # str  : "adam" | "sgd"
+  learning_rate: 0.001             # float: initial learning rate
+  batch_size: 32                   # int  : mini-batch size for DataLoader
+  checkpoint_path: "outputs/artifacts/deep/best_checkpoint.pt"  # str : where to save best model
+  eval_mode: "classification"      # str  : "classification" | "embedding"
+  embedding_classifier: "knn"      # str  : "knn" | "cosine"  (embedding mode only)
+  cosine_threshold: 0.6            # float: cosine similarity threshold for non-match decision
+  arcface_enabled: false           # bool : use ArcFace metric learning loss during training
+  arcface_margin: 0.5              # float: ArcFace angular margin (m)
+  arcface_scale: 64.0              # float: ArcFace scale factor (s)
+
+# ── Evaluation ────────────────────────────────────────────────────────────────
+evaluation:
+  roc_enabled: false               # bool : compute ROC curves, AUC, FAR, FRR, EER
+  output_dir: "outputs"            # str  : top-level outputs directory
+  results_dir: "outputs/results"   # str  : directory for JSON/CSV metric files
+  plots_dir: "outputs/plots"       # str  : directory for PNG comparison plots
